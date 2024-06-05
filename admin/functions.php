@@ -56,14 +56,6 @@ function delete_category()
   }
 }
 
-function update_category()
-{
-  //Update Category
-  global $connection;
-  if (isset($_GET['edit_id'])) {
-    $update_cat_id = $_GET['edit_id'];
-    include "includes/update_category.php";
-  }
-}
+
 
 ?>

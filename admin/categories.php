@@ -31,7 +31,12 @@
               </div>
             </form>
 
-            <?php update_category(); ?>
+            <?php
+            if (isset($_GET['edit_id'])) {
+              $update_cat_id = $_GET['edit_id'];
+              include "includes/update_category.php";
+            }
+            ?>
 
           </div>
 
@@ -39,8 +44,8 @@
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <td>Id</td>
-                  <td>Category Title</td>
+                  <th>Id</th>
+                  <th>Category Title</th>
                 </tr>
               </thead>
               <tbody>
