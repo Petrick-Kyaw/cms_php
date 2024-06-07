@@ -32,29 +32,42 @@ if (isset($_POST['add_post'])) {
     <input type="text" id="title" name="title" class="form-control">
   </div>
   <div class="form-group">
-    <label for="category">Post Category</label>
-    <input type="text" id="category" name="category" class="form-control">
-    <div class="form-group">
-      <label for="author">Post Author</label>
-      <input type="text" id="author" name="author" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="status">Post Status</label>
-      <input type="text" id="status" name="status" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="image">Post Image</label>
-      <input type="file" id="image" name="image">
-    </div>
-    <div class="form-group">
-      <label for="tags">Post Tags</label>
-      <input type="text" name="tags" id="tags" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="content">Post Content</label>
-      <textarea name="content" id="content" class="form-control" cols="30" rows="10"></textarea>
-    </div>
-    <div class="form-group">
-      <input type="submit" name="add_post" value="Publish Post" class="btn btn-primary">
-    </div>
+    <select name="category" id="">
+      <?php
+
+      $query = "SELECT * FROM categories";
+      $select_all_categories_query = mysqli_query($connection, $query);
+      confirm_query($select_all_categories_query);
+      while ($row = mysqli_fetch_assoc($select_all_categories_query)) {
+        $cat_id = $row['cat_id'];
+        $cat_title = $row['cat_title'];
+        echo "<option value='$cat_id'>{$cat_title}</option>";
+      }
+
+      ?>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="author">Post Author</label>
+    <input type="text" id="author" name="author" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="status">Post Status</label>
+    <input type="text" id="status" name="status" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="image">Post Image</label>
+    <input type="file" id="image" name="image">
+  </div>
+  <div class="form-group">
+    <label for="tags">Post Tags</label>
+    <input type="text" name="tags" id="tags" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="content">Post Content</label>
+    <textarea name="content" id="content" class="form-control" cols="30" rows="10"></textarea>
+  </div>
+  <div class="form-group">
+    <input type="submit" name="add_post" value="Publish Post" class="btn btn-primary">
+  </div>
 </form>
