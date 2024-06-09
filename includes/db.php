@@ -10,7 +10,9 @@ $db = [
 
 // Define constants for database configuration
 foreach ($db as $key => $value) {
-  define(strtoupper($key), $value);
+  if (!defined(strtoupper($key))) {
+    define(strtoupper($key), $value);
+  }
 }
 
 // Establish a database connection
