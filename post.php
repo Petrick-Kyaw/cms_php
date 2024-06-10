@@ -62,6 +62,10 @@
                 $query .= "VALUES({$p_id},'{$comment_author}','{$comment_email}','{$comment_content}',now())";
                 $create_commment_query = mysqli_query($connection, $query);
                 confirm_query($create_commment_query);
+                $query1 = "UPDATE posts SET post_comment_count = post_comment_count + 1";
+                $query1 .= " WHERE post_id = {$p_id}";
+                $add_comment_count_query = mysqli_query($connection, $query1);
+                confirm_query($add_comment_count_query);
             }
 
             ?>
