@@ -148,6 +148,21 @@
                 </div>
             </div>
             <!-- /.row -->
+            <?php
+
+            $query = "SELECT * FROM posts WHERE post_status='draft'";
+            $select_draft_post_query = mysqli_query($connection, $query);
+            $draft_post_count = mysqli_num_rows($select_draft_post_query);
+
+            $query = "SELECT * FROM comments WHERE comment_status='unapproved'";
+            $select_unapproved_comment_query = mysqli_query($connection, $query);
+            $unapproved_comment_count = mysqli_num_rows($select_unapproved_comment_query);
+
+            $query = "SELECT * FROM users WHERE user_role='subscriber'";
+            $select_subscriber_query = mysqli_query($connection, $query);
+            $subscriber_count = mysqli_num_rows($select_subscriber_query);
+
+            ?>
 
             <div class="row">
                 <script type="text/javascript">
@@ -156,17 +171,22 @@
 
                     function drawChart() {
                         var data = google.visualization.arrayToDataTable([
-                            ['Year', 'Sales', 'Expenses', 'Profit'],
-                            ['2014', 1000, 400, 200],
-                            ['2015', 1170, 460, 250],
-                            ['2016', 660, 1120, 300],
-                            ['2017', 1030, 540, 350]
+                            ['Data', 'Count'],
+                            <?php
+
+                            $element_text = ['Active Posts', 'Draft Posts', 'Comments', 'Unapproved Comments', 'Users', 'Subscribers', 'Categories'];
+                            $element_count = [$post_count, $draft_post_count, $comment_count, $unapproved_comment_count, $user_count, $subscriber_count, $category_count];
+                            for ($i = 0; $i < 7; $i++) {
+                                echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
+                            }
+
+                            ?>
                         ]);
 
                         var options = {
                             chart: {
-                                title: 'Company Performance',
-                                subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+                                title: '',
+                                subtitle: '',
                             }
                         };
 
@@ -175,7 +195,7 @@
                         chart.draw(data, google.charts.Bar.convertOptions(options));
                     }
                 </script>
-                <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
+                <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
             </div>
 
         </div>

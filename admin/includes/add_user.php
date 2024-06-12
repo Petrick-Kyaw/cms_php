@@ -21,6 +21,7 @@ if (isset($_POST['add_user'])) {
   $query .= "VALUES('{$user_name}','{$user_password}','{$user_firstname}','{$user_lastname}','{$user_email}','{$user_role}')";
   $add_user_query = mysqli_query($connection, $query);
   confirm_query($add_user_query);
+  echo "<h3>User created..!</h3>" . " " . "<a href='./users.php'>View Users</a>";
 
 }
 
