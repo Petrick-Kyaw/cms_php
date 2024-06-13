@@ -24,7 +24,8 @@ if (!isset($_SESSION['user_role'])) {
   <meta name="author" content="">
 
   <title>SB Admin - Bootstrap Admin Template</title>
-
+  <!-- WYSIWYG -->
+  <link rel="stylesheet" href="css/summernote.css">
   <!-- Bootstrap Core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
 

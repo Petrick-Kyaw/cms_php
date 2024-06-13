@@ -103,10 +103,24 @@ if (isset($_POST['edit_post'])) {
   </div>
   <div class="form-group">
     <label for="status">Post Status</label>
-    <input value="<?php echo $post_status; ?>" type="text" id="status" name="status" class="form-control">
+    <select name="status" id="status">
+      <?php
+      $query = "SELECT * FROM post_status";
+      $select_post_status_query = mysqli_query($connection, $query);
+      while ($row = mysqli_fetch_assoc($select_post_status_query)) {
+        $ps_name = $row['ps_name'];
+        $ps_show = $row['ps_show'];
+        if ($ps_name == $post_status) {
+          echo "<option value='{$ps_name}' selected>{$ps_show}</option>";
+        } else {
+          echo "<option value='{$ps_name}'>{$ps_show}</option>";
+        }
+      }
+      ?>
+    </select>
   </div>
   <div class="form-group">
-    <img width="100" src="../images/<?php echo $post_image; ?>" alt="">
+    <img width="100" src="../images/<?php echo $post_image; ?>" alt=""><br><br>
     <input type="file" name="image" id="">
   </div>
   <div class="form-group">
@@ -114,8 +128,8 @@ if (isset($_POST['edit_post'])) {
     <input value="<?php echo $post_tags; ?>" type="text" name="tags" id="tags" class="form-control">
   </div>
   <div class="form-group">
-    <label for="content">Post Content</label>
-    <textarea name="content" id="content" class="form-control" cols="30" rows="10"><?php echo $post_content; ?>
+    <label for="summernote">Post Content</label>
+    <textarea name="content" id="summernote" class="form-control" cols="30" rows="10"><?php echo $post_content; ?>
     </textarea>
   </div>
   <div class="form-group">

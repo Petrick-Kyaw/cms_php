@@ -53,7 +53,21 @@ if (isset($_POST['add_post'])) {
   </div>
   <div class="form-group">
     <label for="status">Post Status</label>
-    <input type="text" id="status" name="status" class="form-control">
+    <select name="status" id="status">
+      <?php
+      $query = "SELECT * FROM post_status";
+      $select_post_status_query = mysqli_query($connection, $query);
+      while ($row = mysqli_fetch_assoc($select_post_status_query)) {
+        $ps_name = $row['ps_name'];
+        $ps_show = $row['ps_show'];
+        if ($ps_name == 'draft') {
+          echo "<option value='{$ps_name}' selected>{$ps_show}</option>";
+        } else {
+          echo "<option value='{$ps_name}'>{$ps_show}</option>";
+        }
+      }
+      ?>
+    </select>
   </div>
   <div class="form-group">
     <label for="image">Post Image</label>
@@ -64,8 +78,8 @@ if (isset($_POST['add_post'])) {
     <input type="text" name="tags" id="tags" class="form-control">
   </div>
   <div class="form-group">
-    <label for="content">Post Content</label>
-    <textarea name="content" id="content" class="form-control" cols="30" rows="10"></textarea>
+    <label for="summernote">Post Content</label>
+    <textarea name="content" id="summernote" class="form-control" cols="30" rows="10"></textarea>
   </div>
   <div class="form-group">
     <input type="submit" name="add_post" value="Publish Post" class="btn btn-primary">
