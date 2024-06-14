@@ -1,11 +1,17 @@
 <?php
 
 if (isset($_POST['add_user'])) {
-  $user_name = $_POST['user_name'];
-  $user_password = $_POST['user_password'];
-  $user_firstname = $_POST['user_firstname'];
-  $user_lastname = $_POST['user_lastname'];
-  $user_email = $_POST['user_email'];
+  $user_name = mysqli_real_escape_string($connection, $_POST['user_name']);
+
+  $query = "SELECT randSalt FROM users LIMIT 1";
+  $select_randsalt_query = mysqli_query($connection, $query);
+  $row = mysqli_fetch_assoc($select_randsalt_query);
+  $salt = $row['randSalt'];
+
+  $user_password = crypt(mysqli_real_escape_string($connection, $_POST['user_password']), $salt);
+  $user_firstname = mysqli_real_escape_string($connection, $_POST['user_firstname']);
+  $user_lastname = mysqli_real_escape_string($connection, $_POST['user_lastname']);
+  $user_email = mysqli_real_escape_string($connection, $_POST['user_email']);
 
   // $image = $_FILES['image']['name'];
   // $image_temp = $_FILES['image']['tmp_name'];

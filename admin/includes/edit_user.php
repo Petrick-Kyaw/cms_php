@@ -20,12 +20,18 @@ while ($row = mysqli_fetch_assoc($select_user_by_id_query)) {
 
 
 if (isset($_POST['edit_user'])) {
-  $user_name = $_POST['user_name'];
-  $user_password = $_POST['user_password'];
-  $user_firstname = $_POST['user_firstname'];
-  $user_lastname = $_POST['user_lastname'];
-  $user_role = $_POST['user_role'];
-  $user_email = $_POST['user_email'];
+  $user_name = mysqli_real_escape_string($connection, $_POST['user_name']);
+
+  $query = "SELECT randSalt FROM users LIMIT 1";
+  $select_randsalt_query = mysqli_query($connection, $query);
+  $row = mysqli_fetch_assoc($select_randsalt_query);
+  $salt = $row['randSalt'];
+
+  $user_password = crypt(mysqli_real_escape_string($connection, $_POST['user_password']), $salt);
+  $user_firstname = mysqli_real_escape_string($connection, $_POST['user_firstname']);
+  $user_lastname = mysqli_real_escape_string($connection, $_POST['user_lastname']);
+  $user_role = mysqli_real_escape_string($connection, $_POST['user_role']);
+  $user_email = mysqli_real_escape_string($connection, $_POST['user_email']);
 
   // $image = $_FILES['image']['name'];
   // $image_temp = $_FILES['image']['tmp_name'];
@@ -76,7 +82,7 @@ if (isset($_POST['edit_user'])) {
   </div>
   <div class="form-group">
     <label for="user_password">Password</label>
-    <input value="<?php echo $user_password; ?>" type="text" id="user_password" name="user_password"
+    <input value="<?php echo $user_password; ?>" type="password" id="user_password" name="user_password"
       class="form-control">
   </div>
   <div class="form-group">
