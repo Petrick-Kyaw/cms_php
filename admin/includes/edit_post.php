@@ -57,6 +57,7 @@ if (isset($_POST['edit_post'])) {
   $query .= "WHERE post_id = {$edit_post_id}";
   $edit_post_by_id = mysqli_query($connection, $query);
   confirm_query($edit_post_by_id);
+  echo "<p class='bg-success'>Post edited..! <a href='../post.php?p_id={$edit_post_id}'> View post</a> or <a href='./posts.php'>Edit more posts</a></p>";
 }
 
 ?>

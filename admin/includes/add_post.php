@@ -20,6 +20,9 @@ if (isset($_POST['add_post'])) {
   $query .= "VALUES({$category},'{$title}','{$author}',now(),'{$image}','{$content}','{$tags}','{$status}')";
   $add_post_query = mysqli_query($connection, $query);
   confirm_query($add_post_query);
+  //take the last id of last query
+  $the_new_post_id = mysqli_insert_id($connection);
+  echo "<p class='bg-success'>Post Added..! <a href='../post.php?p_id={$the_new_post_id}'> View post</a> or <a href='./posts.php'>Edit more posts</a></p>";
 
 }
 
