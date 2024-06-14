@@ -57,14 +57,20 @@
                 $comment_email = $_POST['comment_email'];
                 $comment_content = $_POST['comment_content'];
 
-                $query = "INSERT INTO comments (comment_post_id,comment_author,comment_email,comment_content,comment_date) ";
-                $query .= "VALUES({$p_id},'{$comment_author}','{$comment_email}','{$comment_content}',now())";
-                $create_commment_query = mysqli_query($connection, $query);
-                confirm_query($create_commment_query);
-                $query1 = "UPDATE posts SET post_comment_count = post_comment_count + 1";
-                $query1 .= " WHERE post_id = {$p_id}";
-                $add_comment_count_query = mysqli_query($connection, $query1);
-                confirm_query($add_comment_count_query);
+                if (!empty($comment_author) && !empty($comment_email) && !empty($comment_content)) {
+
+                    $query = "INSERT INTO comments (comment_post_id,comment_author,comment_email,comment_content,comment_date) ";
+                    $query .= "VALUES({$p_id},'{$comment_author}','{$comment_email}','{$comment_content}',now())";
+                    $create_commment_query = mysqli_query($connection, $query);
+                    confirm_query($create_commment_query);
+                    $query1 = "UPDATE posts SET post_comment_count = post_comment_count + 1";
+                    $query1 .= " WHERE post_id = {$p_id}";
+                    $add_comment_count_query = mysqli_query($connection, $query1);
+                    confirm_query($add_comment_count_query);
+
+                } else {
+                    echo "<script>alert('Fileds cannot be empty..!')</script>";
+                }
             }
 
             ?>
