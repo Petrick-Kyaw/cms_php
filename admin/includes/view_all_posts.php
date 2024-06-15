@@ -21,6 +21,27 @@ if (isset($_POST['checkBoxArray'])) {
         $delete_post_query = mysqli_query($connection, $query);
         confirm_query($delete_post_query);
         break;
+      case 'clone':
+        $query = "SELECT * FROM posts WHERE post_id = {$checkBoxValue}";
+        $select_post_query = mysqli_query($connection, $query);
+        confirm_query($select_post_query);
+        while ($row = mysqli_fetch_assoc($select_post_query)) {
+          $post_title = $row['post_title'];
+          $post_category_id = $row['post_category_id'];
+          $post_date = $row['post_date'];
+          $post_author = $row['post_author'];
+          $post_status = $row['post_status'];
+          $post_image = $row['post_image'];
+          $post_tags = $row['post_tags'];
+          $post_content = $row['post_content'];
+        }
+        $query = "INSERT INTO posts(post_category_id,post_title,post_author,";
+        $query .= "post_date,post_image,post_content,post_tags,post_status) ";
+        $query .= "VALUES($post_category_id,'$post_title','$post_author',now(),'$post_image',";
+        $query .= "'$post_content','$post_tags','$post_status') ";
+        $clone_post_query = mysqli_query($connection, $query);
+        confirm_query($clone_post_query);
+        break;
     }
   }
 }
@@ -36,6 +57,7 @@ if (isset($_POST['checkBoxArray'])) {
         <option value="published">Publish</option>
         <option value="draft">Draft</option>
         <option value="delete">Delete</option>
+        <option value="clone">Clone</option>
       </select>
     </div>
 
@@ -64,7 +86,7 @@ if (isset($_POST['checkBoxArray'])) {
     <tbody>
       <?php
 
-      $query = "SELECT * FROM posts";
+      $query = "SELECT * FROM posts ORDER BY post_id DESC";
       $select_all_posts_query = mysqli_query($connection, $query);
       if (!$select_all_posts_query) {
         die("Query Failed..! " . mysqli_error($connection));
