@@ -15,4 +15,12 @@ $(document).ready(function() {
     }
   });
 
+
+ var div_box = "<div id='load_screen'><div id='loading'></div></div>";
+ $("body").prepend(div_box);
+
+ $("#load_screen").delay(400).fadeOut(600, function(){
+  $(this).remove();
+ })
+
 });
