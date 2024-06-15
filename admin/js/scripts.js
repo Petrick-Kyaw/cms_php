@@ -19,7 +19,7 @@ $(document).ready(function() {
  var div_box = "<div id='load_screen'><div id='loading'></div></div>";
  $("body").prepend(div_box);
 
- $("#load_screen").delay(400).fadeOut(600, function(){
+ $("#load_screen").delay(150).fadeOut(150, function(){
   $(this).remove();
  })
 

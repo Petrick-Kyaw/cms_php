@@ -126,7 +126,7 @@ if (isset($_POST['checkBoxArray'])) {
           echo "<td>{$post_tags}</td>";
           echo "<td>{$post_comment_count}</td>";
           echo "<td>{$post_date}</td>";
-          echo "<td>{$post_views_count}</td>";
+          echo "<td><a href='./posts.php?reset_id={$post_id}'>{$post_views_count}</a></td>";
           echo "<td><a href='../post.php?p_id={$post_id}'>View Post</a></td>";
           echo "<td><a href='./posts.php?source=edit_post&edit_id={$post_id}'>Edit</a></td>";
           echo "<td><a onClick=\"javascript: return confirm('Do you want to delete?'); \" href='./posts.php?delete_id={$post_id}'>Delete</td>";
@@ -147,6 +147,14 @@ if (isset($_GET['delete_id'])) {
   $query = "DELETE FROM posts WHERE post_id={$delete_post_id}";
   $delete_post_query = mysqli_query($connection, $query);
   confirm_query($delete_post_id);
+  header("Location: ./posts.php");
+}
+
+if (isset($_GET['reset_id'])) {
+  $reset_id = $_GET['reset_id'];
+  $query = "UPDATE posts SET post_views_count = 0 WHERE post_id={$reset_id}";
+  $reset_view_count_query = mysqli_query($connection, $query);
+  confirm_query($reset_view_count_query);
   header("Location: ./posts.php");
 }
 

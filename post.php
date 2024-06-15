@@ -3,6 +3,9 @@
 <!-- Navigation -->
 <?php include "includes/navigation.php"; ?>
 
+<!-- Function -->
+<?php include "includes/functions.php"; ?>
+
 <!-- Page Content -->
 <div class="container">
 
@@ -79,6 +82,8 @@
                 } else {
                     echo "<script>alert('Fileds cannot be empty..!')</script>";
                 }
+
+                redirect(location: "/cms/post.php?p_id=$p_id");
             }
 
             ?>
