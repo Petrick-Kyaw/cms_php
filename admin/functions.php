@@ -63,6 +63,30 @@ function delete_category()
   }
 }
 
+function show_active_user()
+{
+  global $connection;
+  $session = session_id();
+  $time = time();
+  $time_out_in_second = 60;
+  $time_out = $time - $time_out_in_second;
+
+  $query = "SELECT * FROM users_online WHERE uo_session = '{$session}'";
+  $select_section_query = mysqli_query($connection, $query);
+  confirm_query($select_section_query);
+  $count = mysqli_num_rows($select_section_query);
+
+  if ($count == NULL) {
+    mysqli_query($connection, "INSERT INTO users_online(uo_session, uo_time)  VALUES('$session','$time')");
+  } else {
+    mysqli_query($connection, "UPDATE users_online SET uo_time = '$time' WHERE uo_session = '$session'");
+  }
+  $user_online_query = mysqli_query($connection, "SELECT * FROM users_online WHERE uo_time > '$time_out'");
+  confirm_query($user_online_query);
+  $online_user_count = mysqli_num_rows($user_online_query);
+  return $online_user_count;
+}
+
 
 
 ?>
