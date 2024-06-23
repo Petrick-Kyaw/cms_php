@@ -3,12 +3,7 @@
 if (isset($_POST['add_user'])) {
   $user_name = mysqli_real_escape_string($connection, $_POST['user_name']);
 
-  $query = "SELECT randSalt FROM users LIMIT 1";
-  $select_randsalt_query = mysqli_query($connection, $query);
-  $row = mysqli_fetch_assoc($select_randsalt_query);
-  $salt = $row['randSalt'];
-
-  $user_password = crypt(mysqli_real_escape_string($connection, $_POST['user_password']), $salt);
+  $user_password = password_hash(mysqli_real_escape_string($connection, $_POST['user_password']), PASSWORD_BCRYPT, array('cost' => 12));
   $user_firstname = mysqli_real_escape_string($connection, $_POST['user_firstname']);
   $user_lastname = mysqli_real_escape_string($connection, $_POST['user_lastname']);
   $user_email = mysqli_real_escape_string($connection, $_POST['user_email']);

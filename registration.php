@@ -8,12 +8,9 @@ if (isset($_POST['submit'])) {
     $user_name = mysqli_real_escape_string($connection, $_POST['user_name']);
     $user_email = mysqli_real_escape_string($connection, $_POST['user_email']);
 
-    $query = "SELECT randSalt FROM users LIMIT 1";
-    $select_randsalt_query = mysqli_query($connection, $query);
-    $row = mysqli_fetch_assoc($select_randsalt_query);
-    $salt = $row['randSalt'];
 
-    $user_password = crypt(mysqli_real_escape_string($connection, $_POST['user_password']), $salt);
+
+    $user_password = password_hash(mysqli_real_escape_string($connection, $_POST['user_password']), PASSWORD_BCRYPT, array('cost' => 12));
 
     if (empty($user_firstname) && empty($user_lastname) && empty($user_name) && empty($user_email) && empty($user_password)) {
         $message = "Fields cannot be empty";
