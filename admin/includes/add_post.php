@@ -1,5 +1,5 @@
 <?php
-
+$username = $_SESSION['user_name'];
 if (isset($_POST['add_post'])) {
   $title = $_POST['title'];
   $category = $_POST['category'];
@@ -52,7 +52,7 @@ if (isset($_POST['add_post'])) {
   </div>
   <div class="form-group">
     <label for="author">Post Author</label>
-    <input type="text" id="author" name="author" class="form-control">
+    <input value="<?php echo $username; ?>" type="text" id="author" name="author" class="form-control" readonly>
   </div>
   <div class="form-group">
     <label for="status">Post Status</label>

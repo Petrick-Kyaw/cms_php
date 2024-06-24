@@ -1,4 +1,5 @@
 <?php
+include "delete_modal.php";
 if (isset($_POST['checkBoxArray'])) {
   foreach ($_POST['checkBoxArray'] as $checkBoxValue) {
     $bulk_options = $_POST['bulk_options'];
@@ -124,12 +125,19 @@ if (isset($_POST['checkBoxArray'])) {
           echo "<td>{$post_status}</td>";
           echo "<td><img width='100' src='../images/$post_image'></td>";
           echo "<td>{$post_tags}</td>";
-          echo "<td>{$post_comment_count}</td>";
+
+          $query = "SELECT * FROM comments WHERE comment_post_id = $post_id";
+          $select_comment_query = mysqli_query($connection, $query);
+          confirm_query($select_comment_query);
+          $comment_count = mysqli_num_rows($select_comment_query);
+
+          echo "<td><a href='comments.php?source=comment&c_id={$post_id}'>{$comment_count}</a></td>";
           echo "<td>{$post_date}</td>";
           echo "<td><a href='./posts.php?reset_id={$post_id}'>{$post_views_count}</a></td>";
           echo "<td><a href='../post.php?p_id={$post_id}'>View Post</a></td>";
           echo "<td><a href='./posts.php?source=edit_post&edit_id={$post_id}'>Edit</a></td>";
-          echo "<td><a onClick=\"javascript: return confirm('Do you want to delete?'); \" href='./posts.php?delete_id={$post_id}'>Delete</td>";
+          echo "<td><a rel='$post_id' href='javascript:void(0)' class='delete_link'>Delete</td>";
+          // echo "<td><a onClick=\"javascript: return confirm('Do you want to delete?'); \" href='./posts.php?delete_id={$post_id}'>Delete</td>";
           echo "</tr>";
 
         }
@@ -159,3 +167,14 @@ if (isset($_GET['reset_id'])) {
 }
 
 ?>
+
+<script>
+  $(document).ready(function () {
+    $(".delete_link").on('click', function () {
+      var id = $(this).attr("rel");
+      var delete_url = "posts.php?delete_id=" + id + " ";
+      $(".delete_modal_link").attr("href", delete_url);
+      $("#exampleModalCenter").modal('show');
+    });
+  });
+</script>

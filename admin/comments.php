@@ -32,8 +32,8 @@
             case 'edit_post';
               include "includes/edit_post.php";
               break;
-            case '200';
-              echo "It is 200";
+            case 'comment';
+              include "post_comment.php";
               break;
             default:
               include "includes/view_all_comments.php";
